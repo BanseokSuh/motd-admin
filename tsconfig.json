@@ -22,5 +22,20 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "baseUrl": ".",
+  "paths": {
+    "@/*": [
+      "src/*"
+    ],
+    "@components/*": [
+      "src/components/*"
+    ],
+    "@styles/*": [
+      "src/styles/*"
+    ],
+    "@assets/*": [
+      "src/assets/*"
+    ],
+  },
 }
