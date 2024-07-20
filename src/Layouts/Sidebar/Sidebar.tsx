@@ -7,6 +7,15 @@ const Sidebar = () => {
       <LogoWrapper href="/">
         {/* <Logo src={img} alt="Logo" /> */}
       </LogoWrapper>
+      <NavLink href="/">
+        <FaPhotoVideo /> <span>r_root</span>
+      </NavLink>
+      <NavLink href="/main">
+        <FaPhotoVideo /> <span>r_main</span>
+      </NavLink>
+      <NavLink href="/about">
+        <FaPhotoVideo /> <span>r_about</span>
+      </NavLink>
       <NavLink href="/motd-admin">
         <FaPhotoVideo /> <span>MOTD 이미지</span>
       </NavLink>
