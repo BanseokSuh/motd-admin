@@ -231,3 +231,9 @@ sketch
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,react,visualstudiocode,node
+
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules

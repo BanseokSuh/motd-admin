@@ -1,102 +1,174 @@
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { CSSProperties } from 'react'; // Import CSSProperties for type checking
-import Modal from './Modal';
-
-interface Content {
-    id: number;
-    name: string;
-    description: string;
-    order: number;
-    img: string;
-}
+import { BiSearch, BiTrash } from "react-icons/bi";
+import { getMotdList, deleteMotd } from '../Services/Motd/Motd';
+import Modal from './MotdModal';
 
 const Motd: React.FC = () => {
-    const [modalShow, setModalShow] = useState(false);
-    const [currentContent, setCurrentContent] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+  const [currentContentId, setCurrentContentId] = useState("");
+  const [motd, setMotd] = useState<{ id: string; name: string; description: string; order: number; imageUrl: string; redirectUrl: string }[]>([]);
 
-    const handleOpenModal = (content: any) => {
-        setCurrentContent(content);
-        setModalShow(true);
-    };
+  const handleOpenModal = (id: string) => {
+    console.log('content', id);
 
-    const handleCloseModal = () => {
-        setModalShow(false);
-    };
+    if (id) {
+      setCurrentContentId(id);
+    } else {
+      setCurrentContentId("");
+    }
 
-    const contents: Content[] = [
-        { id: 1, name: 'Motd 1', description: 'Description 1', order: 1, img: 'https://via.placeholder.com/200' },
-        { id: 2, name: 'Motd 2', description: 'Description 2', order: 2, img: 'https://via.placeholder.com/200' },
-        { id: 3, name: 'Motd 3', description: 'Description 3', order: 3, img: 'https://via.placeholder.com/200' }
-    ];
+    setModalShow(true);
+  };
 
-    const styles: { [key: string]: CSSProperties } = { // Use CSSProperties for type checking
-        table: {
-            width: '100%',
-            borderCollapse: 'collapse', // This is a valid value for borderCollapse
-            boxShadow: '0 2px 3px rgba(0,0,0,0.1)',
-        },
-        th: {
-            backgroundColor: '#00BFFF', // Light blue color
-            color: 'white',
-            padding: '10px 15px',
-            textAlign: 'left',
-        },
-        td: {
-            padding: '10px 15px',
-            borderBottom: '1px solid #dddddd',
-        },
-        tr: {
-            // Inline styles for pseudo-classes like ':nth-child' are not supported in React inline styles.
-            // Consider using CSS classes or styled-components for complex styles.
-        },
-    };
+  const handleCloseModal = async () => {
+    setModalShow(false);
+    await getMotdListFromDB();
+    setCurrentContentId("");
+  };
 
-    return (
-        <div>
-            <table style={styles.table}>
-                <thead>
-                    <tr>
-                        <th style={styles.th}>ID</th>
-                        <th style={styles.th}>이름</th>
-                        <th style={styles.th}>설명</th>
-                        <th style={styles.th}>순서</th>
-                        <th style={styles.th}>상세보기</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {contents.map((content, index) => (
-                        <tr key={content.id} style={index % 2 === 0 ? { backgroundColor: '#f2f2f2' } : undefined}>
-                            <td style={styles.td}>{content.id}</td>
-                            <td style={styles.td}>{content.name}</td>
-                            <td style={styles.td}>{content.description}</td>
-                            <td style={styles.td}>{content.order}</td>
-                            <td style={styles.td}>
-                                <DetailButton onClick={() => handleOpenModal(content)}>Details</DetailButton>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <Modal show={modalShow} onClose={handleCloseModal} content={currentContent} />
-        </div>
-    );
+  const deleteData = async (id: string) => {
+    const isConfirmed = window.confirm("정말 삭제하시겠습니까?");
+
+    if (!isConfirmed) {
+      return;
+    }
+
+    alert("삭제되었습니다.");
+    await deleteMotd(id);
+    await getMotdListFromDB();
+  };
+
+  const getMotdListFromDB = async () => {
+    const motdListSnapshot = await getMotdList();
+
+    const motdList = motdListSnapshot.docs.map((doc: any) => {
+      const {
+        name, description, order, imageUrl, redirectUrl
+      } = doc.data();
+
+      return {
+        id: doc.id,
+        name,
+        description,
+        order,
+        imageUrl,
+        redirectUrl
+      }
+    });
+
+    setMotd(motdList);
+  };
+
+
+  useEffect(() => {
+    getMotdListFromDB();
+  }, []);
+
+  return (
+    <div>
+      <CreateButton onClick={() => handleOpenModal("")}>추가</CreateButton>
+      <StyledTable>
+        <StyledHead>
+          <StyledRow>
+            <StyledHeaderCell>이름</StyledHeaderCell>
+            <StyledHeaderCell>설명</StyledHeaderCell>
+            <StyledHeaderCell>순서</StyledHeaderCell>
+            <StyledHeaderCell>리다이렉트url</StyledHeaderCell>
+            <StyledHeaderCell>상세보기</StyledHeaderCell>
+            <StyledHeaderCell>삭제</StyledHeaderCell>
+          </StyledRow>
+        </StyledHead>
+        <tbody>
+          {motd.map((content, index) => (
+            <StyledRow key={index}>
+              <StyledCell>{content.name}</StyledCell>
+              <StyledCell>{content.description}</StyledCell>
+              <StyledCell>{content.order}</StyledCell>
+              <StyledCell>{content.redirectUrl}</StyledCell>
+              <StyledCell>
+                <DetailButton onClick={() => handleOpenModal(content.id)}>
+                  <BiSearch />
+                </DetailButton>
+              </StyledCell>
+              <StyledCell>
+                <DeleteButton onClick={() => deleteData(content.id)}>
+                  <BiTrash />
+                </DeleteButton>
+              </StyledCell>
+            </StyledRow>
+          ))}
+        </tbody>
+      </StyledTable>
+      <Modal show={modalShow} onClose={handleCloseModal} id={currentContentId} />
+    </div>
+  );
 };
 
+const CreateButton = styled.button`
+  background-color: #007bff; /* Primary blue */
+  color: white; /* White text */
+  padding: 10px 24px;
+  border: none; /* Remove border for a cleaner look */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Modern, sans-serif font */
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: none; /* Remove outline */
+  }
+`;
+
+const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+const StyledHead = styled.thead`
+  background-color: #eee;
+`;
+
+const StyledHeaderCell = styled.th`
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  
+`;
+
+const StyledCell = styled.td`
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+`;
+
+const StyledRow = styled.tr`
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
 
 const DetailButton = styled.button`
-  background-color: #007bff; /* Blue background */
-  color: white; /* White text */
-  padding: 10px 20px; /* Padding around the text */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 16px; /* Text size */
-  transition: background-color 0.2s; /* Smooth background color transition on hover */
+  padding: 10px 20px;
+  background-color: #C6ADD2;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+`;
 
-  &:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-  }
+const DeleteButton = styled.button`
+  padding: 10px 20px;
+  background-color: darkred;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 `;
 
 export default Motd;

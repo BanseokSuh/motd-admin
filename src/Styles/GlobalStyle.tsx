@@ -16,4 +16,13 @@ export default createGlobalStyle`
     ul{
         list-style: none;
     }
+                                
+    body{
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.5;
+        overflow-y: auto;
+        max-height: 100%;
+    }
 `;
