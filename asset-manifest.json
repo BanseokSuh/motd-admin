@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/motd-admin/static/js/main.0fe0df4f.js",
-    "index.html": "/motd-admin/index.html",
-    "main.0fe0df4f.js.map": "/motd-admin/static/js/main.0fe0df4f.js.map"
+    "main.js": "https://banseoksuh.github.io/motd-admin/static/js/main.56e164cc.js",
+    "index.html": "https://banseoksuh.github.io/motd-admin/index.html",
+    "main.56e164cc.js.map": "https://banseoksuh.github.io/motd-admin/static/js/main.56e164cc.js.map"
   },
   "entrypoints": [
-    "static/js/main.0fe0df4f.js"
+    "static/js/main.56e164cc.js"
   ]
 }
