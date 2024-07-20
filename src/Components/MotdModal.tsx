@@ -125,7 +125,7 @@ const Modal = ({ show, onClose, id }: ModalProps) => {
                         </ModalImgWrapper>
                         <ModalContent>
                             <InputWrapper>
-                                <label htmlFor="name">이름</label>
+                                <label htmlFor="name">태그</label>
                             </InputWrapper>
                             <InputWrapper>
                                 <input

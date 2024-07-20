@@ -71,7 +71,7 @@ const Motd: React.FC = () => {
       <StyledTable>
         <StyledHead>
           <StyledRow>
-            <StyledHeaderCell>이름</StyledHeaderCell>
+            <StyledHeaderCell>태그</StyledHeaderCell>
             <StyledHeaderCell>설명</StyledHeaderCell>
             <StyledHeaderCell>순서</StyledHeaderCell>
             <StyledHeaderCell>리다이렉트url</StyledHeaderCell>
