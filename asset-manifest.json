@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/motd-admin/static/js/main.1cf25edb.js",
+    "main.js": "/motd-admin/static/js/main.c19a5533.js",
     "index.html": "/motd-admin/index.html",
-    "main.1cf25edb.js.map": "/motd-admin/static/js/main.1cf25edb.js.map"
+    "main.c19a5533.js.map": "/motd-admin/static/js/main.c19a5533.js.map"
   },
   "entrypoints": [
-    "static/js/main.1cf25edb.js"
+    "static/js/main.c19a5533.js"
   ]
 }
