@@ -4,7 +4,7 @@ const Navigation = () => {
 
     return (
         <Wrapper>
-            <NavName href="/">Light Community Church</NavName>
+            <NavName href="/motd-admin">Light Community Church</NavName>
         </Wrapper>
     )
 };
