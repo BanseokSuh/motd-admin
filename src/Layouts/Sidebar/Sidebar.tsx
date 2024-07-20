@@ -9,9 +9,9 @@ const Sidebar = () => {
         {/* <Logo src={img} alt="Logo" /> */}
       </LogoWrapper>
       <NavLink to="/">
-        <FaPhotoVideo /> <span>r_root</span>
+        <FaPhotoVideo /> <span>MOTD 이미지</span>
       </NavLink>
-      <NavLink to="/main">
+      {/* <NavLink to="/main">
         <FaPhotoVideo /> <span>r_main</span>
       </NavLink>
       <NavLink to="/about">
@@ -19,7 +19,7 @@ const Sidebar = () => {
       </NavLink>
       <NavLink to="/motd-admin">
         <FaPhotoVideo /> <span>MOTD 이미지</span>
-      </NavLink>
+      </NavLink> */}
     </NavBar>
   );
 };
