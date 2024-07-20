@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FaPhotoVideo } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
@@ -7,16 +8,16 @@ const Sidebar = () => {
       <LogoWrapper href="/">
         {/* <Logo src={img} alt="Logo" /> */}
       </LogoWrapper>
-      <NavLink href="/">
+      <NavLink to="/">
         <FaPhotoVideo /> <span>r_root</span>
       </NavLink>
-      <NavLink href="/main">
+      <NavLink to="/main">
         <FaPhotoVideo /> <span>r_main</span>
       </NavLink>
-      <NavLink href="/about">
+      <NavLink to="/about">
         <FaPhotoVideo /> <span>r_about</span>
       </NavLink>
-      <NavLink href="/motd-admin">
+      <NavLink to="/motd-admin">
         <FaPhotoVideo /> <span>MOTD 이미지</span>
       </NavLink>
     </NavBar>
@@ -36,8 +37,20 @@ const NavBar = styled.nav`
   padding: 20px 0px;
 `;
 
-const NavLink = styled.a`
-  display: block;
+// const NavLink = styled.a`
+//   display: block;
+//   padding: 10px;
+//   color: #3F63C4;
+//   font-weight: bold;
+//   text-decoration: none;
+
+//   &:hover {
+//     background-color: #f0f0f0;
+//   }
+// `;
+
+const NavLink = styled(Link)`
+    display: block;
   padding: 10px;
   color: #3F63C4;
   font-weight: bold;
