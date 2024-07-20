@@ -7,7 +7,7 @@ import Motd from '../Components/Motd';
 const RoutesComponent = () => {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Motd />} />
             <Route path="/main" element={<Main />} />
             <Route path="/motd" element={<Motd />} />
             <Route path="/about" element={<About />} />
