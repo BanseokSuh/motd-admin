@@ -133,7 +133,7 @@ const Modal = ({ show, onClose, id }: ModalProps) => {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     onKeyDown={handleKeyPress}
-                                    readOnly
+                                    readOnly={id ? true : false}
                                 />
                             </InputWrapper>
 
