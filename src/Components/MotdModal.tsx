@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getMotd, modifyMotd, addMotd } from '../Services/Motd/Motd';
+import { getMotd, modifyMotd, addMotd, uploadImageAndGetUrl } from '../Services/Motd/Motd';
 
 type ModalProps = {
     show: boolean;
@@ -48,8 +48,8 @@ const Modal = ({ show, onClose, id }: ModalProps) => {
             name,
             description,
             order,
-            imageUrl,
-            redirectUrl
+            redirectUrl,
+            imageUrl
         };
 
         await addMotd(content);
@@ -67,16 +67,13 @@ const Modal = ({ show, onClose, id }: ModalProps) => {
         }
     };
 
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
 
         if (file) {
-            // const reader = new FileReader();
-            // reader.readAsDataURL(file);
+            const url = await uploadImageAndGetUrl(file);
 
-            // reader.onload = () => {
-            //     setimageUrl(reader.result as string);
-            // };
+            setimageUrl(url);
         }
     }
 

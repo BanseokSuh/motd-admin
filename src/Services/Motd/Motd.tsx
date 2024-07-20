@@ -1,4 +1,4 @@
-import { db, storage } from '../../firebase';
+import { db, storage, ref, uploadBytes, getDownloadURL } from '../../firebase';
 import { collection, getDocs, doc, getDoc, setDoc, where, query } from "firebase/firestore/lite";
 
 export const getMotdList = async () => {
@@ -34,4 +34,12 @@ export const addMotd = async (content: any) => {
 
 export const deleteMotd = async (id: string) => {
     await setDoc(doc(collection(db, 'notices'), id), { active: false });
+};
+
+export const uploadImageAndGetUrl = async (file: File) => {
+    const fileRef = ref(storage, `notice_images/${file.name}`);
+
+    await uploadBytes(fileRef, file);
+
+    return await getDownloadURL(fileRef);
 };
