@@ -7,7 +7,7 @@ export const getMotdList = async () => {
     try {
         // docs = await getDocs(collection(db, 'notices'));
         const noticesRef = collection(db, 'notices');
-        const q = query(noticesRef, where("isDeleted", "==", false));
+        const q = query(noticesRef, where("active", "==", false));
 
         docs = await getDocs(q);
     } catch (error) {
@@ -28,10 +28,10 @@ export const modifyMotd = async (id: string, content: any) => {
 };
 
 export const addMotd = async (content: any) => {
-    const contents = { ...content, isDeleted: false };
+    const contents = { ...content, active: false };
     await setDoc(doc(collection(db, 'notices')), contents);
 };
 
 export const deleteMotd = async (id: string) => {
-    await setDoc(doc(collection(db, 'notices'), id), { isDeleted: true });
+    await setDoc(doc(collection(db, 'notices'), id), { active: true });
 };

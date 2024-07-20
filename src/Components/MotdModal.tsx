@@ -36,7 +36,7 @@ const Modal = ({ show, onClose, id }: ModalProps) => {
             order,
             imageUrl,
             redirectUrl,
-            isDeleted: false
+            active: false
         };
 
         await modifyMotd(id, content);
